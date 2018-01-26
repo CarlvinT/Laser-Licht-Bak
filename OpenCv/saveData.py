@@ -1,11 +1,5 @@
 import sys
-import pyLoop
-
-def clear(fileName):
-
-    with open(fileName, 'w') as theFile:
-
-        theFile.write("0")
+import sendData
 
 def addBiker(hasLight):
 
@@ -16,6 +10,8 @@ def addBiker(hasLight):
     else:
 
         addLight('noLight.csv')
+
+    sendData.checkData()
 
 def displayFile(fileName):
 
@@ -34,13 +30,8 @@ def addLight(fileName):
 
     print(type(lc))
 
-    clear(fileName)
-
     with open(fileName, 'w') as theFile:
 
         theFile.write("{}".format(lc+1))
 
-    if lc > 8:
-        print("Clearing file")
-        pyLoop.sendToTTN()
-        clear(fileName)
+
