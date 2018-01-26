@@ -1,5 +1,12 @@
 import sys
+import sendData
 
+def clear(fileName):
+    
+    with open(fileName, 'w') as theFile: 
+        
+        theFile.write(0)
+   
 def addBiker(hasLight):
 
     if hasLight == 1:
@@ -15,9 +22,7 @@ def displayFile(fileName):
     with open(fileName, 'r') as theFile:
 
         fileContent = theFile.read()
-
-     
-    
+        
         return fileContent
         
 def addLight(fileName):
@@ -33,11 +38,8 @@ def addLight(fileName):
         else:
             
               theFile.write("{}".format(lightCount))
-
-
-
-addBiker(int(sys.argv[1]))
-
-
-
- 
+         
+    if lightCount > 8:
+        
+        sendData.sendToTTN()
+        clear(fileName)
