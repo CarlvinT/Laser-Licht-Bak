@@ -7,8 +7,7 @@ import imutils
 import datetime
 import time
 import argparse
-
-
+import saveData
 #-------IMAGE SOURCE----------------------------------------------------------------------------------------------------------------------------------------------------
 # Use Camera
 im = cv2.VideoCapture(0)
@@ -184,10 +183,12 @@ while True:
 
     if bike == True and light == True and countedbikeandlight == False:
         bikeandlight += 1
+        saveData.addBiker(1)
         countedbikeandlight = True
         countedbike = True
     elif bike == True and countedbike == False:
         bikes += 1
+        saveData.addBiker(1)
         countedbike = True
 
 
