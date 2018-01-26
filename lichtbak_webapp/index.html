@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<!-- Jquery CDN -->
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<!-- Particles.js -->
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script> 
+
+<!-- FA icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!-- Favicon -->
+<link rel="icon" href="img/favicon.ico">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+<script src="js/index.js"></script>
+
+<!-- Controllers -->
+<script src="js/MainController.js"></script>
+<script src="js/DashboardController.js"></script>
+<script src="js/ToolsController.js"></script>
+<script src="js/coordinateService.js"></script>
+<script src="js/loginService.js"></script>
+<script src="js/drawService.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jcanvas/20.1.4/min/jcanvas.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/6.4.3/rzslider.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/6.4.3/rzslider.min.js"></script>
+
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+<!-- Other CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
+<link href="css/index.css" rel="stylesheet">
+
+<!-- Angular libs -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.6/angular-animate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.6/angular-route.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBy_uZ6Z5Jg_97fAmT9iH36Agc0jhQc8zg" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/locale/nl.js"></script>
+
+<title>LaserLichtBak </title>
+<meta charset='utf-8'>
+</head>
+
+<body ng-app="lightApp" ng-controller="MainController" >
+
+	<nav class="on-top navbar no-margin navbar-default">
+
+		<div class="container-fluid">
+			<div class="navbar-header">
+
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+
+				<a class="navbar-brand" href="#/">💡 LLB</a>
+
+			</div>
+
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+				<ul ng-if="loggedIn" class="nav navbar-nav navbar-right">
+					<li  class="fade-element-in"  ><a  href="#Tools"><i class="fa fa-wrench"></i> Tools </a></li>
+					<li  class="fade-element-in"  ><a  href="#Dashboard"><i class="fa fa-bar-chart"></i> Dashboard </a></li>
+					<li  class="fade-element-in"  ><a role="button" ng-click="logoutConfirm()" ><i class="fa fa-sign-in"></i> Uitloggen </a></li>
+					
+				</ul>	
+
+				<ul ng-if="!loggedIn" class="nav navbar-nav navbar-right">
+				<li class="fade-element-in" ><a data-toggle="modal" role="button" data-target="#loginModal"><i class="fa fa-sign-out"></i> Inloggen</a></li>
+			</ul>
+			</div>
+		</div>
+
+	</nav>
+
+	<div id="main">
+	
+		<!-- angular templating -->
+		<!-- this is where content will be injected -->
+		<div ng-view></div>
+		
+	</div>
+
+
+<!-- Modals -->
+
+<div id="loginModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Inloggen</h4>
+			</div>
+
+			<div class="modal-body">
+
+				<div class="row">
+					<div class="col-md-12">
+
+						<form name="loginForm" ng-submit="login()" class="form">
+
+							<div class="form-group">
+								<div class="input-group">
+
+									<span class="input-group-addon" id="basic-addon1"><i class="fa fa-user"></i></span>
+									<input autocomplete="email" type="email"  ng-model="email" name="email" class="form-control" placeholder="E-mailadres">
+
+								</div>
+							</div> 
+
+							<div class="form-group">
+								<div class="input-group">
+
+									<span class="input-group-addon" id="basic-addon1"><i class="fa fa-lock"></i></span>	
+									<input autocomplete="current-password" type="password" class="form-control" ng-model="password" name="password" placeholder="Wachtwoord"/>
+
+								</div>
+							</div>
+
+							<div class="form-group">
+								<button type="submit" ng-disabled="loading" class="btn btn-success"><i class="fa fa-user"></i> Inloggen</button>
+								<i ng-if="loading" class="fa fa-cog fa-spin fa-fw fade-element-in"></i>
+								<span ng-if="!loading" class="text-danger fade-element-in">{{ error }}</span>
+							</div>
+
+						</form>
+
+					</div>
+				</div>
+
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn" data-dismiss="modal"><i class="fa fa-times"></i> Sluiten</button>
+			</div>
+
+		</div>	
+	</div>
+</div>
+
+<div class="modal fade" id="notificationModal" role="dialog">
+	<div class="modal-dialog">
+		
+			<!-- Modal content-->
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">{{ loginDetails.header }}</h4>
+			</div>
+
+			<div class="modal-body">
+				<p>{{ loginDetails.message }}</p>
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn" data-dismiss="modal"><i class="fa fa-times"></i> Sluiten</button>
+			</div>
+
+		</div>
+
+	</div>
+</div>
+
+<div class="modal fade" id="logoutModal" role="dialog">
+	<div class="modal-dialog">
+		
+			<!-- Modal content-->
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Uitloggen</h4>
+			</div>
+
+			<div class="modal-body">
+				<p>Weet je zeker dat je wilt uitloggen?</p>
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" ng-click="logout()" ><i class="fa fa-sign-out"></i> Uitloggen</button>
+				<button type="button" class="btn" data-dismiss="modal"><i class="fa fa-times"></i> Sluiten</button>
+			</div>
+
+		</div>
+
+	</div>
+</div>
+
+</body>
+
+</html>
+

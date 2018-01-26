@@ -1,0 +1,134 @@
+
+<!-- particles.js container --> 
+<div id="particles-js" class="container">	
+</div>
+
+
+
+<div class="jumbotron main-jumbo">
+	<div class="container">
+
+		<center>
+
+			<h1>LaserLichtBak <img height="80" src='img/bike_png.png'/></h1>
+			<h3>- IOT Powered Bicycle light tracker - </h3>
+
+			<br/>
+
+			<button ng-if="!loggedIn" type="button" class="btn fade-element-in" data-toggle="modal" data-target="#loginModal"><i class="fa fa-user"></i> Inloggen</button> 
+			<button type="button" class="btn" ng-click="smoothScroll('first-slide')"><i class="fa fa-book"></i> Lees Meer</button>
+		
+		</center>
+
+	</div>
+</div>
+
+	<div class="panel panel-default main-color first-slide">
+		<div class="panel-body max-970  main-color">
+			<div class="col-sm-12  text-center">
+				<br/>
+				<h2> Wat is de LaserLichtBak? </h2>
+				<br/>
+				<div class="col-sm-6 text-left">
+				<h4>De LaserLichtBak</h4>
+					<p>
+De LaserLichtBak is een device wat bijhoudt hoeveel fietsers er op een bepaald gebied voorbij komen.</p> <p>Hiernaast wordt er gemonitord of een fietser over fietsverlichting beschikt. Indien een fietser geen licht op de fiets heeft wordt er via laserstralen een melding weergeven welke de fietser er aan herrinerd om zijn/haar fietslicht aan te zetten.</p>
+				<p>De LaserLichtBak is verbonden met het web doormiddel van her LoRaWan netwerk waarmee relevante informatie over de fietsers wordt verstuurd en op een dashboard kan worden weergeven.</p>
+				<br/>
+				<br/>
+				</div>
+
+				<div class="col-sm-6 text-center">
+					<img class="img-responsive img-max-height"  src="img/lora-logo.jpg"/>
+					<figcaption><i>LoraWan (Long Range Wide Area Network)</i></figcaption>
+				</div>
+
+			</div>
+		</div>
+		<div class="text-center">
+			<i role="button" ng-click="smoothScroll('second-slide')" class="fa fa-4x fa-angle-down"></i>
+		</div>
+		
+	</div>
+
+	<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+	<div class="panel panel-default main-color second-slide">
+		<div class="panel-body max-970  main-color">
+			<div class="col-sm-12 text-center">
+
+				<h2> Doelstelling </h2>
+				<br/>
+				<div class="col-sm-6 text-center">
+					<img class="img-responsive img-max-height"  src="img/bike_img_1.png"/>
+					<figcaption><i>Fietsers met en zonder licht</i></figcaption>
+													<br/>
+				<br/>
+				</div>
+
+				<div class="col-sm-6 text-left">
+					<h4>Het verkeer</h4>
+					<p>Het doel van de LaserLichtBak is de algemene verkeersveiligheid te verbeteren. Dit wordt gedaan door fietsers aan te spreken indien er geen licht op de fiets aanwezig is.</p><p> Hierdoor hopen wij dat fietsers bewuster worden van het gebruik van licht op de fiets.</p>
+									<br/>
+				<br/>
+				</div>
+
+			</div>
+		</div>
+				<div class="text-center">
+			<i role="button" ng-click="smoothScroll('third-slide')" class="fa fa-4x fa-angle-down"></i>
+		</div>
+	</div>
+
+		<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+	<div class="panel main-color panel-default third-slide">
+		<div class="panel-body max-970  main-color">
+			<div class="col-sm-12 max-970 text-center">
+
+				<h2> Technologie </h2>
+				<br/>
+
+				<div class="col-sm-6 text-left">
+					<h4>Werking</h4>
+					<p>De LaserLichtBak werkt door middel van een galvanometer in combinatie met een laser pointer. De laser wordt op de spiegels bevestigd aan de assen van de galvanometer gericht en wordt vervolgens door een Arduino aangestuurd. De galvanometer is in staat om coordinaten om te zetten naar een positie waar de laser op gericht zal worden.</p>
+
+					<p>
+					Door de razendsnelle nature van de galvanometer kunnen meerdere coordinaten tegelijk worden weergeven, wat resulteert in de optische illusie van een 2D afbeelding op een 2D vlak.
+				</p><br/>
+				
+				<br/>
+				</div>
+
+				<div class="col-sm-6 text-center">
+					<img class="img-responsive img-max-height"    src="img/xyscan.png"/>
+					 <figcaption><i>Visualisatie werking galvanometer</i></figcaption>
+													<br/>
+				<br/>
+				</div>
+			</div>
+			<div class="col-sm-12 max-970 text-center">
+
+			<div class="col-sm-6 text-center">
+					<img class="img-responsive img-max-height"    src="img/bike_img_2.png"/>
+					 <figcaption><i>Canvas drawing tool</i></figcaption>
+				</div>
+
+
+				<div class="col-sm-6 text-left">
+						<h4>Tools</h4>
+					<p>Via verschillende tools kunnen er diverse afbeeldingen worden gecreeërd welke door de galvanometer kunnen worden weergeven. In dit geval wordt er gericht op het aanspreken van fietsers doormiddel van tekst en een aantal afbeeldingen.</p>
+				</div>
+					
+			</div>
+		</div>
+						<div class="text-center">
+			<i role="button" ng-click="smoothScroll('navbar-default')" class="fa fa-4x fa-angle-up"></i>
+		</div>
+	</div>	
+
+<br/><br/><br/><br/><br/><br/>
+
+	<script src="js/particlesConfig.js"></script>
+
+	

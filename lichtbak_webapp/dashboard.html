@@ -1,0 +1,257 @@
+
+<div class="row">
+<div class="col-md-12 ">
+
+<div class="col-md-4 col-xs-4 col-sm-4 left-bar">
+	<div class="row">
+		
+		<div class="btn-group-vertical  btn-dash" role="group" aria-label="...">
+
+			<div class="panel panel-default">
+  <div class="panel-heading text-center"><h4><i class="fa fa-dashboard"></i> Dashboard</div>
+  	<div class="panel-body ">
+  		<p> Dit is het dashboard van de Laserbakken. Hier kan diverse data worden ingezien omtrent het gedrag van fietsers rond de locaties van de boxes. </p>
+  	</div>
+ 
+</div>
+
+		  <button type="button" data-toggle="collapse" data-target="#BoxDiv" class="btn dash-btn btn-lg btn-default">
+		  	<h5><i class="fa fa-archive"></i> Devices <span class="caret caret-dash"></span></h5>
+		  </button>
+
+				<div id="BoxDiv" class="collapse">
+				<div class="panel panel-default">
+				<div class="panel-heading force-pointer">
+					<h4 ng-if="!boxOpen">Alle devices <span class="badge">{{ boxes.length }} </span>
+						<p ng-if="boxOpen"></p>					</h4>
+					<h4 ng-if="boxOpen">Bak details
+						<button ng-click="closeBox()" class="btn btn-sm stats-btn pull-right"><i class="fa fa-arrow-left"></i> </button> 
+			
+					</h4>
+			</div>
+
+			<div class="panel-body stats-view force-pointer">
+				<div ng-if="boxOpen">
+				<p>Locatie: {{ selectedBox.location }}</p>
+				<p>Latitude: {{ selectedBox.latitude }}</p>
+				<p>Longitude: {{ selectedBox.longitude }}
+				</p>
+				</div>
+				<table ng-if="!boxOpen" class="table table-striped">
+					<thead>
+						<tr>
+							<th>Box</th>
+							<th>Locatie</th>
+							<th>Details</th>
+						</tr>
+					</thead>
+
+					<tbody>
+
+						<tr ng-repeat="box in boxes track by $index">
+							<td>
+								<button class="btn" ng-click="movePos(box.latitude, box.longitude)"><i class="fa fa-eye"></i> </button>
+							</td>
+							<td>{{ box.location }}</td>
+							<td>{{ box.details }}</td>
+						</tr>
+					</tbody>
+				</table>
+
+				
+					
+			</div>
+	
+		</div>
+				</div>
+
+		  <button type="button" data-toggle="collapse" data-target="#FietsDiv" class="btn dash-btn btn-lg btn-default">
+		  	<h5><i class="fa fa-bicycle"></i> Fietser overzicht <span class="caret caret-dash"></span></h5>
+		  	</button>
+
+		  	<div id="FietsDiv" class="collapse">
+
+				<div class="panel panel-default">
+					<div class="panel-heading force-pointer">
+
+						<span>
+							<h4>Recent <span class="badge">{{ fietsers.length }} </span>    
+								<span class="pull-right dropdown">
+									<button class="btn stats-btn btn-sm" data-toggle="dropdown" class="dropdown-toggle">Aantal <b class="caret"></b></button>
+										<ul class="dropdown-menu">
+												<li><a ng-click="getFietserCount(10)" role="button" >10</a></li>
+												<li><a ng-click="getFietserCount(25)"  role="button" >25</a></li>
+												<li><a ng-click="getFietserCount(50)"  role="button" >50</a></li>
+												<li><a ng-click="showFietsWarning()" role="button" >Maximaal </a></li>
+										</ul>
+									</span>
+			 
+							</h4>
+						</span>
+					</div>
+				<div class="panel-body force-pointer stats-view">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>Licht</th>
+								<th>Tijdstip</th>
+								<th>Locatie</th>
+							</tr>
+						</thead>
+
+						<tbody>
+
+							<tr ng-repeat="fietser in fietsers track by $index">
+								<td>
+									<p class="text-danger" ng-if="fietser.heeft_licht == 1">
+										<i class="fa fa-times"></i> Geen Licht
+									</p>
+									<p class="text-success" ng-if="fietser.heeft_licht == 0">
+										<i class="fa fa-check"></i> Wel Licht
+									</p>
+								</td>
+
+								<td>{{ formatDate(fietser.datum)  }}</td>
+
+								<td>{{ fietser.location }}</td>
+
+							</tr>
+						</tbody>
+					</table>
+					
+				</div>
+			</div>
+				</div>
+
+		  <button type="button" data-toggle="collapse" data-target="#ToolsDiv" class="btn dash-btn btn-lg btn-default">
+		  	<h5><i class="fa fa-pie-chart"></i> Verhouding lichtgebruik <span class="caret caret-dash"></span></h5>
+		  </button>
+
+		  	<div id="ToolsDiv" class="collapse">
+				<div class="panel panel-default">
+						<div class="panel-heading force-pointer"><h4>Alle resultaten <span class="badge">{{ totalResults }} </span>
+			
+				</h4>
+			</div>
+					<div class="panel-body stats-view force-pointer">
+
+						<canvas id="pieChart" height="200"></canvas>
+
+					</div>
+				</div>
+			</div>
+				</div>
+
+		  <button type="button" data-toggle="collapse" data-target="#BarChartDiv" class="btn dash-btn btn-lg btn-default">
+		  	<h5><i class="fa fa-bar-chart"></i> Datum overzicht <span class="caret caret-dash"></span></h5>
+		  </button>
+
+		  	<div id="BarChartDiv" height="200" class="collapse">
+		  					<div class="panel panel-default">
+		  						<div class="panel-heading force-pointer">
+		  							<h4>Selecteer tijdstippen</h4>
+		  							</div>
+
+		  							<div class="panel-body">
+		  								
+		  								<label>Startdatum </label>
+
+		  								<div id="startDate" class="input-group date" data-date-format="mm-dd-yyyy">
+										    <input ng-model="barChartDates.startDate" ng-change="changeDates()" class="form-control" type="text" readonly />
+										    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+											</div>
+
+											<label>Eindatum </label>
+
+											<div id="endDate" class="input-group date" data-date-format="mm-dd-yyyy">
+											    <input ng-model="barChartDates.endDate" ng-change="changeDates()" class="form-control" type="text" readonly />
+											    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+											</div>
+									</div>
+										<div id="bar-chart-container">
+					<canvas id="bar-chart-grouped"  height="300"></canvas>
+				</div>
+
+				</div>
+
+		  	
+
+
+
+		  		
+
+			</div>
+
+
+				
+				</div>
+
+
+
+
+		</div>
+
+	
+
+
+
+	</div>
+</div>
+
+
+
+
+<div class="col-md-8 col-xs-8 col-sm-8" id="map"></div>
+
+
+
+	<div class="modal fade" id="dataModal" role="dialog">
+	<div class="modal-dialog">
+		
+			<!-- Modal content-->
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Waarschuwing</h4>
+			</div>
+
+			<div class="modal-body">
+				<p>Weet je zeker dat je alle resultaten wilt zien? Dit kan erg lang duren.</p>
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" ng-click="getFietserCount(0)" ><i class="fa fa-eye"></i> Laat alles zien</button>
+				<button type="button" class="btn" data-dismiss="modal"><i class="fa fa-times"></i> Sluiten</button>
+			</div>
+
+		</div>
+
+	</div>
+</div>
+
+
+</div>
+
+
+<style>
+
+
+
+	.over-map { position: absolute; left: 35px; z-index: 99; }
+#map {
+		height: 100%;
+
+		right: 0;
+		position: relative;
+		top: 0;    
+}
+
+.gm-style {
+	background: #242f3e;
+}
+
+</style>
+		<script>
+			
+		</script>

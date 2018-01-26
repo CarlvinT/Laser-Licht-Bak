@@ -1,0 +1,173 @@
+<div class="row">
+	<div class="col-md-12 ">
+
+		<div class="col-md-4 col-xs-4 col-sm-4 left-bar">
+
+			<div class="row">
+		
+				<div class="btn-group-vertical  btn-dash" role="group" aria-label="...">
+
+					<div class="panel panel-default">
+
+						<div class="panel-heading text-center">
+							<h4><i class="fa fa-wrench"></i> Tools</h4>
+						</div>
+						<div class="panel-body ">
+  		<p> Hier staan een aantal tools en instellingen om een Laser afbeelding te maken.  </p>
+  	</div>
+				</div>
+						<button type="button" data-toggle="collapse" data-target="#drawDiv" class="btn dash-btn btn-lg btn-default">
+		  				<h5><i class="fa fa-pencil"></i> Canvas <span class="caret caret-dash"></span></h5>
+		  			</button>
+
+		  			<div id="drawDiv" class="collapse in">
+							<div class="panel panel-default">
+								<div class="panel-heading force-pointer"><h4>Coordinaten 	<span class="badge" type="button">
+  X: {{ coordinates.x }}
+</span>
+<span class="badge" type="button">
+  Y: {{ coordinates.y }}
+</span></h4>
+		
+								</div>
+
+							
+								<div class="panel-body force-pointer">
+
+
+									<div class="panel panel-default btn-space">
+										<div class="panel-body">
+											Raster grootte
+											<rzslider rz-slider-model="slider.value" id="slider" rz-slider-options="slider.options"></rzslider>
+										</div>
+									</div>
+
+									<button type="checkbox" ng-click="toggleSnap()" ng-class="{'active' : gridSnapping}" class="btn btn-default btn-space" autocomplete="off">
+										<i class="fa fa-th"></i> Uitlijnen op raster
+									</button>
+
+									<button type="checkbox" ng-click="toggleGrid()" ng-class="{'active' : gridActive}"class="btn btn-default btn-space" data-toggle="button" autocomplete="off">
+										<i class="fa fa-th-large"></i> Raster aan/uit
+									</button>
+
+									<button type="checkbox" ng-click="togglePoints()" ng-class="{'active' : gridActive}"class="btn btn-default btn-space" data-toggle="button" autocomplete="off">
+										<i class="fa fa-eye"></i> Punten aan/uit
+									</button>
+
+									<button class="btn btn-default btn-space" ng-click="clearCanvas()" ng-disabled="activeLines.length < 1" >
+										<i class="fa fa-refresh"></i> Reset
+									</button>
+
+									<button id="coordButton" ng-disabled="activeLines.length < 1" class="btn btn-default btn-space" ng-click="displayCoords()"> <i class="fa fa-map-marker"></i> Coordinaten weergeven
+									</button>
+											
+									<button id="undoButton" class="btn btn-default btn-space" ng-click="undo()" ng-disabled="activeLines.length < 1" >
+										<i class="fa fa-undo"></i> Ongedaan maken
+									</button>
+
+									<span ng-if="activeLines.length > 0">
+										 <div class="btn-group btn-row-parent btn-space" role="group" aria-label="...">
+												<div class="btn-group btn-75 btn-space" role="group">
+													<button type="button" class="btn btn-default">Lijnen</button>
+												</div>
+
+												<div class="btn-group btn-row btn-space" role="group">
+													<button type="button" class="btn btn-default"> {{ activeLines.length / 2 }}</button>
+												</div> 
+
+												<div class="btn-group btn-75 btn-space" role="group">
+													<button type="button" class="btn btn-default">Coordinates</button>
+												</div>
+
+												<div class="btn-group btn-row btn-space" role="group">
+													<button type="button" class="btn btn-default">{{ activeLines.length * 2}}</button>
+												</div>
+										</div>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+						<button type="button" data-toggle="collapse" data-target="#importCoord" class="btn dash-btn btn-lg btn-default">
+		  				<h5><i class="fa fa-location-arrow"></i> Importeer coordinaten <span class="caret caret-dash"></span></h5>
+		  			</button>
+
+		  			<div id="importCoord" class="collapse">
+							<div class="panel panel-default">
+								<div class="panel-heading force-pointer"><h4>Coordinaten: <span class="badge">{{ coordinateService.coordinateList.length }}</span> </h4>
+									<textarea class="form-control" placeholder="Bijv.:&#10;200,200,&#10;500,800,&#10;800,200,&#10;200,200" rows="5" ng-model="importedCoords" id="comment">
+										{{ importedCoords }}
+									</textarea>
+									<br/>
+									<button class="btn" ng-click="importViewCoords()"><i class="fa fa-download"></i> Importeren</button>
+	
+								</div>
+							</div>
+						</div>
+
+		  			<button type="button" data-toggle="collapse" data-target="#exportCoord" class="btn dash-btn btn-lg btn-default">
+		  				<h5><i class="fa fa-external-link"></i> Exporteer header file <span class="caret caret-dash"></span></h5>
+		  			</button>
+
+		  			<div id="exportCoord" class="collapse">
+							<div class="panel panel-default">
+								<div class="panel-heading force-pointer"><h4>Bestandsnaam:</h4>
+
+<div class="input-group">
+  <span class="input-group-addon" id="basic-addon3"><i class="fa fa-file-text-o"></i> </span>
+  <input type="text" class="form-control" name="fileName" ng-model="fileName" placeholder="Bestandsnaam" id="basic-url" required aria-describedby="basic-addon3">
+</div><br/>
+
+									<button class="btn" ng-class="{'addClear': fileName.length < 1}" ng-click="exportArduinoFormat()"><i class="fa fa-upload"></i> Exporteren</button>
+	
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+
+	<div class="col-sm-8">   	
+		<div class="panel panel-default">
+			
+  <div class="panel-heading"><h4><i class="fa fa-pencil"></i> Line Drawer 
+   </h4> </div>
+			</div>
+  
+  <div class="panel-body"><p>In het canvas kunnen simpele vormen worden getekend welke vervolgens omgezet kunnen worden naar een header file. </p><p> Onder de tab 'Canvas' staan enkele controls en opties welke kunnen worden gebruikt voor het tekenen van een vorm.  </p>
+  	<p>Coordinaten kunnen worden geimporteerd van X 0 t/m 1000 en Y 0 t/m 1000. </p>
+  	<p>Om een header file te exporteren kan er onder de 'Exporteer header file' tab een header file worden gegenereerd. </p>
+
+  <div id="canvas_container">
+			<canvas id="canvas" class="tool-canvas text-center" width="500" height="500">
+
+			</canvas>
+		</div></div>
+</div>
+		
+	</div>
+
+	<div id="coordModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+
+	<!-- Modal content-->
+	<div class="modal-content ">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Coordinates</h4>
+			</div>
+			<div class="modal-body ">
+					<h4>( X From, Y From, X To, Y To )</h4>
+					<div  id="int-coordinates">
+					</div>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+		</div>
+	</div>
+</div>
