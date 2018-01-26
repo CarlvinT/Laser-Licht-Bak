@@ -7,9 +7,7 @@ import imutils
 import datetime
 import time
 import argparse
-from tkinter import *
 
-root= Tk()
 
 #-------IMAGE SOURCE----------------------------------------------------------------------------------------------------------------------------------------------------
 # Use Camera
