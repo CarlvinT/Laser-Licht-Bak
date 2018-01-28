@@ -401,6 +401,10 @@ app.service('drawService', function() {
 			canvas.moveLayer('yCrosshair', canvas.getLayers().length-3);
 		}
 
+		ds.clearImage = function() {
+			canvas.css('background-image', 'none');
+		}
+
 		ds.clear = function() {
 
 			canvas.removeLayerGroup('lines');

@@ -1,4 +1,4 @@
-app.controller('ToolsController', function($scope, $http, drawService, coordinateService, loginService) {
+app.controller('ToolsController', function($scope, $http, drawService, coordinateService, loginService, convertService) {
 
 	loginService.checkLogin();
 
@@ -297,13 +297,21 @@ app.controller('ToolsController', function($scope, $http, drawService, coordinat
 		$('#coordModal').modal('show');
 
 		var coords = coordinateService.getCoordinateList();
-		console.log(coords);
+		//console.log(coords);
 		$('#int-coordinates').empty();
 		for(var x = 0; x < coords.length; x++) {
 
 			var theCoord = coords[x];
 
 			$('#int-coordinates').append(theCoord + ',</br>')
+		}
+	}
+
+	$scope.importImage = function() {
+
+		if($scope.imageUrl.endsWith('.jpg') || $scope.imageUrl.endsWith('.png')) {
+			$('.tool-canvas').css("background-image", "url(" + $scope.imageUrl + ")");
+
 		}
 	}
 
@@ -369,42 +377,13 @@ app.controller('ToolsController', function($scope, $http, drawService, coordinat
 
 	$scope.exportArduinoFormat = function() {
 
-		var totalFile;
+		var format = convertService.convertToHex($scope.fileName, coordinateService.getCoordinateList());
 
-		var fileName = $scope.fileName;
+		$('#hex-coordinates').empty();
 
-		var header = '#ifndef ' + fileName;
-		var functionHeader = 'const unsigned short ' +  fileName + '[] PROGMEM = {';
-		var functionFooter = '};';
+		$('#hex-coordinates').append(format);
 
-		totalFile = header + '\n\n' + functionHeader + '\n'
-
-		var hexCoords = [];
-		var coordList = coordinateService.getCoordinateList();
-
-		
-		for(var x = 0; x < coordList.length; x ++) {
-
-			for(var y = 0; y < coordList[x].length; y ++) {
-
-				hexCoords.push(coordList[x][y].toString(16));
-			}
-		}
-
-		var hexString = '';
-
-		for(var z = 0; z < hexCoords.length; z ++) {
-			if(z % 4 == 0 && z != 0) {
-				hexString += '\n';
-			}
-			hexString += hexCoords[z] + ',';
-		}
-
-		totalFile = totalFile + hexString + '\n' + functionFooter;
-
-		// Convert to header file or copy from console (to do);
-
-		console.log(totalFile);
+		$('#hexModal').modal('show');
 
 	}
 
@@ -491,6 +470,10 @@ app.controller('ToolsController', function($scope, $http, drawService, coordinat
 
 // Scope functions
 
+	$scope.deleteImage = function() {
+		drawService.clearImage();
+	}
+
 	$scope.undo = function() {
 
 		drawService.removeLastAction();
@@ -540,4 +523,5 @@ app.controller('ToolsController', function($scope, $http, drawService, coordinat
 	  
 	}
 
+	
 });

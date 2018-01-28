@@ -114,16 +114,39 @@
 							<div class="panel panel-default">
 								<div class="panel-heading force-pointer"><h4>Bestandsnaam:</h4>
 
-<div class="input-group">
-  <span class="input-group-addon" id="basic-addon3"><i class="fa fa-file-text-o"></i> </span>
-  <input type="text" class="form-control" name="fileName" ng-model="fileName" placeholder="Bestandsnaam" id="basic-url" required aria-describedby="basic-addon3">
-</div><br/>
+									<div class="input-group">
+									  <span class="input-group-addon" id="basic-addon3"><i class="fa fa-file-text-o"></i> </span>
+									  <input type="text" class="form-control" name="fileName" ng-model="fileName" placeholder="Bestandsnaam" id="basic-url" >
+									</div><br/>
 
 									<button class="btn" ng-class="{'addClear': fileName.length < 1}" ng-click="exportArduinoFormat()"><i class="fa fa-upload"></i> Exporteren</button>
 	
 								</div>
 							</div>
 						</div>
+
+								  			<button type="button" data-toggle="collapse" data-target="#importImage" class="btn dash-btn btn-lg btn-default">
+		  				<h5><i class="fa fa-file-image-o"></i> Importeer afbeelding <span class="caret caret-dash"></span></h5>
+		  			</button>
+
+		  			<div id="importImage" class="collapse">
+							<div class="panel panel-default">
+								<div class="panel-heading force-pointer"><h4>Afbeelding URL:</h4>
+
+									<div class="input-group">
+									  <span class="input-group-addon" id="basic-addon3"><i class="fa fa-file-text-o"></i> </span>
+									  <input type="text" class="form-control" name="imageUrl" ng-model="imageUrl" placeholder="Bestandsnaam">
+									</div><br/>
+
+									<button class="btn" ng-click="importImage()"><i class="fa fa-download"></i> Selecteren</button> 
+									<button class="btn btn-danger" ng-click="deleteImage()"><i class="fa fa-times"></i> </button>
+	
+								</div>
+							</div>
+						</div>
+
+
+
 					</div>
 				</div>
 
@@ -133,7 +156,7 @@
 	<div class="col-sm-8">   	
 		<div class="panel panel-default">
 			
-  <div class="panel-heading"><h4><i class="fa fa-pencil"></i> Line Drawer 
+  <div class="panel-heading"><h4><i class="fa fa-pencil"></i> Canvas Drawer 
    </h4> </div>
 			</div>
   
@@ -157,15 +180,43 @@
 	<div class="modal-content ">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">Coordinates</h4>
+				<h4 class="modal-title">Coordinaten</h4>
 			</div>
 			<div class="modal-body ">
-					<h4>( X From, Y From, X To, Y To )</h4>
-					<div  id="int-coordinates">
-					</div>
+					<pre  id="int-coordinates">
+					</pre>
 				</div>
 
 				<div class="modal-footer">
+
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+		</div>
+	</div>
+
+
+</div>
+
+<div id="hexModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+
+	<!-- Modal content-->
+	<div class="modal-content ">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Arduino functie</h4>
+			</div>
+			<div class="modal-body ">
+				<p>Importeer deze functie in het <b>Objects.h</b> bestand van de Arduino LaserShow library.</p>
+				
+						<pre id="hex-coordinates">
+							
+						</pre>
+			
+				</div>
+
+				<div class="modal-footer">
+				
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				</div>
 		</div>
